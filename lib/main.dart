@@ -1,8 +1,9 @@
 import 'package:drum/global.dart';
+import 'package:drum/level.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MaterialApp(home:Level()));
 }
 
 class MyApp extends StatefulWidget {
