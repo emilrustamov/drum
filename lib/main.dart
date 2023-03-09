@@ -6,6 +6,5 @@ import 'package:drum/listTrains.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp(home:Auth(title: '',)));
-
+  runApp(MaterialApp(home: Auth()));
 }

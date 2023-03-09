@@ -1,34 +1,41 @@
-// import 'package:drum/auth.dart';
-// import 'package:drum/global.dart';
-// import 'package:drum/auth.dart';
-// import 'package:drum/level.dart';
-// import 'package:drum/listTrains.dart';
-// import 'package:flutter/material.dart';
+import 'package:drum/global.dart';
+import 'package:flutter/material.dart';
 
-// class ListTrains extends StatelessWidget {
-//   const ListTrains({Key? key}) : super(key: key);
+class ListTrains extends StatefulWidget {
+  const ListTrains({super.key});
 
-//   @override
-//   Widget build(BuildContext context) {
-  
-//     return Scaffold(
-//       appBar: AppBar(title: const Text("ListView.builder")),
-//       body: ListView.builder(
-//         itemCount: 30,
-//         itemBuilder: (BuildContext context, int index) {
-//           return Container(
-//             child: Text(items.first),
-//             width: 328,
-//             height: 64,
-//             decoration: BoxDecoration(
-//               gradient: gradient,
-//               borderRadius: BorderRadius.all(
-//                 Radius.circular(12),
-//               ),
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
+  @override
+  State<ListTrains> createState() => _ListTrainsState();
+}
+
+class _ListTrainsState extends State<ListTrains> {
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    return Scaffold(
+      body: SafeArea(
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          children: [
+            ...List.generate(30, (index) {
+              return Center(
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 12),
+                  padding: EdgeInsets.all(20),
+                  width: width * 0.91,
+                  height: 64,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      gradient: gradient,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Text('Day ${index}'),
+                ),
+              );
+            })
+          ],
+        ),
+      ),
+    );
+  }
+}
