@@ -1,4 +1,5 @@
 import 'package:drum/global.dart';
+import 'package:drum/listTrains.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -20,20 +21,20 @@ class _LevelState extends State<Level> {
   List levelInfo = [
     {
       "name": "Beginner",
-      "subname": "Lorem Ipsum",
+      "subname": "I'm just starting to learn",
       "disImage": "images/first_lev_b.svg",
       "activImage": "images/first_lev_w.svg"
     },
     {
-      "name": "Middle",
-      "subname": "Lorem Ipsum",
-      "disImage": "images/first_lev_b.svg",
+      "name": "Intermediate",
+      "subname": "I train every week to improve my skills",
+      "disImage": "images/second_lev_b.svg",
       "activImage": "images/first_lev_w.svg"
     },
     {
-      "name": "Pro",
-      "subname": "Lorem Ipsum",
-      "disImage": "images/first_lev_b.svg",
+      "name": "Advanced",
+      "subname": "I play drums well and practice every day",
+      "disImage": "images/third_lev_b.svg",
       "activImage": "images/first_lev_w.svg"
     },
   ];
@@ -48,7 +49,7 @@ class _LevelState extends State<Level> {
           backgroundColor: Color.fromARGB(255, 255, 255, 255),
           title: Text(
             "Choose your level",
-            style: h1(),
+            style: title_medium(),
           ),
           leading: GestureDetector(
             onTap: () {
@@ -56,7 +57,7 @@ class _LevelState extends State<Level> {
             },
             child: Icon(
               Icons.arrow_back,
-              color: blackDrum,
+              color: black,
             ),
           ),
         ),
@@ -65,6 +66,7 @@ class _LevelState extends State<Level> {
             alignment: Alignment.center,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              
               children: [
                 ...List.generate(
                     3,
@@ -76,240 +78,36 @@ class _LevelState extends State<Level> {
                         levelInfo[index]["subname"],
                         levelInfo[index]["disImage"],
                         levelInfo[index]["activImage"])),
-                // SizedBox(
-                //   height: 20,
-                // ),
-                // GestureDetector(
-                //   onTap: () {
-                //     setState(() {
-                //       isSelected = true;
-                //     });
-                //   },
-                //   child: Container(
-                //     child: Row(
-                //       children: [
-                //         Padding(
-                //           padding: EdgeInsets.only(left: 26.0),
-                //           child: isSelected == true
-                //               ? Image.asset("images/firstLevelWhite.png")
-                //               : Image.asset("images/firstLevelBlack.png"),
-                //         ),
-                //         Column(
-                //           mainAxisAlignment: MainAxisAlignment.center,
-                //           crossAxisAlignment: CrossAxisAlignment.center,
-                //           children: [
-                //             Row(
-                //               children: [
-                //                 Padding(
-                //                   padding: const EdgeInsets.only(right: 4),
-                //                   child: Container(
-                //                     decoration: BoxDecoration(
-                //                       color: isSelected == true
-                //                           ? Colors.white
-                //                           : blackDrum,
-                //                       borderRadius: BorderRadius.all(
-                //                         Radius.circular(12),
-                //                       ),
-                //                     ),
-                //                     width: 6,
-                //                     height: 16,
-                //                   ),
-                //                 ),
-                //                 Padding(
-                //                   padding: const EdgeInsets.only(right: 4),
-                //                   child: Container(
-                //                     decoration: BoxDecoration(
-                //                       color: isSelected == true
-                //                           ? Colors.white.withOpacity(0.5)
-                //                           : blackDrum.withOpacity(0.5),
-                //                       borderRadius: BorderRadius.all(
-                //                         Radius.circular(12),
-                //                       ),
-                //                     ),
-                //                     width: 6,
-                //                     height: 16,
-                //                   ),
-                //                 ),
-                //                 Padding(
-                //                   padding: const EdgeInsets.only(right: 8),
-                //                   child: Container(
-                //                     decoration: BoxDecoration(
-                //                       color: isSelected == true
-                //                           ? Colors.white.withOpacity(0.5)
-                //                           : blackDrum.withOpacity(0.5),
-                //                       borderRadius: BorderRadius.all(
-                //                         Radius.circular(12),
-                //                       ),
-                //                     ),
-                //                     width: 6,
-                //                     height: 16,
-                //                   ),
-                //                 ),
-                //                 Text(
-                //                   "Begginer",
-                //                   style: TextStyle(
-                //                       color: isSelected == true
-                //                           ? Colors.white
-                //                           : blackDrum,
-                //                       fontSize: 16,
-                //                       fontWeight: FontWeight.w500),
-                //                 )
-                //               ],
-                //             ),
-                //             Padding(
-                //               padding:
-                //                   const EdgeInsets.only(left: 26.0, top: 8),
-                //               child: Text(
-                //                 "I'm just starting to learn",
-                //                 style: TextStyle(
-                //                     color: isSelected == true
-                //                         ? Colors.white
-                //                         : mediumBlackDrum,
-                //                     fontSize: 12,
-                //                     fontWeight: FontWeight.w400),
-                //               ),
-                //             )
-                //           ],
-                //         ),
-                //       ],
-                //     ),
-                //     decoration: BoxDecoration(
-                //       boxShadow: [
-                //         BoxShadow(
-                //           color: isSelected == true
-                //               ? Colors.black.withOpacity(0.2)
-                //               : Colors.transparent,
-                //           spreadRadius: 1,
-                //           blurRadius: 1,
-                //           offset: Offset(0, 1), // changes position of shadow
-                //         ),
-                //       ],
-                //       gradient: isSelected == true ? gradient : gradient2,
-                //       borderRadius: BorderRadius.all(
-                //         Radius.circular(12),
-                //       ),
-                //     ),
-                //     width: 328,
-                //     height: 140,
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 20,
-                // ),
-                // GestureDetector(
-                //   onTap: () {
-                //     setState(() {
-                //       isSelected = true;
-                //     });
-                //   },
-                //   child: Container(
-                //     child: Row(
-                //       children: [
-                //         Padding(
-                //           padding: EdgeInsets.only(left: 26.0),
-                //           child: isSelected == true
-                //               ? Image.asset("images/firstLevelWhite.png")
-                //               : Image.asset("images/firstLevelBlack.png"),
-                //         ),
-                //         Column(
-                //           mainAxisAlignment: MainAxisAlignment.center,
-                //           crossAxisAlignment: CrossAxisAlignment.center,
-                //           children: [
-                //             Row(
-                //               children: [
-                //                 Padding(
-                //                   padding: const EdgeInsets.only(right: 4),
-                //                   child: Container(
-                //                     decoration: BoxDecoration(
-                //                       color: isSelected == true
-                //                           ? Colors.white
-                //                           : blackDrum,
-                //                       borderRadius: BorderRadius.all(
-                //                         Radius.circular(12),
-                //                       ),
-                //                     ),
-                //                     width: 6,
-                //                     height: 16,
-                //                   ),
-                //                 ),
-                //                 Padding(
-                //                   padding: const EdgeInsets.only(right: 4),
-                //                   child: Container(
-                //                     decoration: BoxDecoration(
-                //                       color: isSelected == true
-                //                           ? Colors.white.withOpacity(0.5)
-                //                           : blackDrum.withOpacity(0.5),
-                //                       borderRadius: BorderRadius.all(
-                //                         Radius.circular(12),
-                //                       ),
-                //                     ),
-                //                     width: 6,
-                //                     height: 16,
-                //                   ),
-                //                 ),
-                //                 Padding(
-                //                   padding: const EdgeInsets.only(right: 8),
-                //                   child: Container(
-                //                     decoration: BoxDecoration(
-                //                       color: isSelected == true
-                //                           ? Colors.white.withOpacity(0.5)
-                //                           : blackDrum.withOpacity(0.5),
-                //                       borderRadius: BorderRadius.all(
-                //                         Radius.circular(12),
-                //                       ),
-                //                     ),
-                //                     width: 6,
-                //                     height: 16,
-                //                   ),
-                //                 ),
-                //                 Text(
-                //                   "Begginer",
-                //                   style: TextStyle(
-                //                       color: isSelected == true
-                //                           ? Colors.white
-                //                           : blackDrum,
-                //                       fontSize: 16,
-                //                       fontWeight: FontWeight.w500),
-                //                 )
-                //               ],
-                //             ),
-                //             Padding(
-                //               padding:
-                //                   const EdgeInsets.only(left: 26.0, top: 8),
-                //               child: Text(
-                //                 "I'm just starting to learn",
-                //                 style: TextStyle(
-                //                     color: isSelected == true
-                //                         ? Colors.white
-                //                         : mediumBlackDrum,
-                //                     fontSize: 12,
-                //                     fontWeight: FontWeight.w400),
-                //               ),
-                //             )
-                //           ],
-                //         ),
-                //       ],
-                //     ),
-                //     decoration: BoxDecoration(
-                //       boxShadow: [
-                //         BoxShadow(
-                //           color: isSelected == true
-                //               ? Colors.black.withOpacity(0.2)
-                //               : Colors.transparent,
-                //           spreadRadius: 1,
-                //           blurRadius: 1,
-                //           offset: Offset(0, 1), // changes position of shadow
-                //         ),
-                //       ],
-                //       gradient: isSelected == true ? gradient : gradient2,
-                //       borderRadius: BorderRadius.all(
-                //         Radius.circular(12),
-                //       ),
-                //     ),
-                //     width: 328,
-                //     height: 140,
-                //   ),
-                // ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: width * 0.04, vertical: 50),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ListTrains()));
+                    },
+                    style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20))),
+                    child: Ink(
+                      decoration: BoxDecoration(
+                          gradient: gradient,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Container(
+                        width: width * 0.91,
+                        height: height * 0.06,
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Continue',
+                          style: label_large(),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -335,59 +133,59 @@ class _LevelState extends State<Level> {
           child: Row(
             children: [
               Padding(
-                padding: EdgeInsets.only(left: width * 0.03),
+                padding: EdgeInsets.only(left: width * 0.08),
                 child: isSelecte[levIndex]["selected"] == true
                     ? SvgPicture.asset(activImage)
                     : SvgPicture.asset(disImage),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(right: width * 0.004),
+                        padding: EdgeInsets.only(left: width * 0.1,  right: width * 0.01),
                         child: Container(
                           decoration: BoxDecoration(
                             color: isSelecte[levIndex]["selected"] == true
                                 ? Colors.white
-                                : blackDrum,
+                                : black,
                             borderRadius: BorderRadius.all(
                               Radius.circular(12),
                             ),
                           ),
-                          width: 6,
+                          width: width * 0.018,
                           height: 16,
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(right: width * 0.004),
+                        padding: EdgeInsets.only(right: width * 0.01),
                         child: Container(
                           decoration: BoxDecoration(
                             color: isSelecte[levIndex]["selected"] == true
                                 ? Colors.white.withOpacity(0.5)
-                                : blackDrum.withOpacity(0.5),
+                                : black.withOpacity(0.5),
                             borderRadius: BorderRadius.all(
                               Radius.circular(12),
                             ),
                           ),
-                          width: 6,
+                          width: width * 0.018,
                           height: 16,
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(right: width * 0.008),
+                        padding: EdgeInsets.only(right: width * 0.02),
                         child: Container(
                           decoration: BoxDecoration(
                             color: isSelecte[levIndex]["selected"] == true
                                 ? Colors.white.withOpacity(0.5)
-                                : blackDrum.withOpacity(0.5),
+                                : black.withOpacity(0.5),
                             borderRadius: BorderRadius.all(
                               Radius.circular(12),
                             ),
                           ),
-                          width: 6,
+                          width: width * 0.018,
                           height: 16,
                         ),
                       ),
@@ -396,21 +194,21 @@ class _LevelState extends State<Level> {
                         style: TextStyle(
                             color: isSelecte[levIndex]["selected"] == true
                                 ? Colors.white
-                                : blackDrum,
+                                : black,
                             fontSize: 16,
                             fontWeight: FontWeight.w500),
-                      )
+                      ),
                     ],
                   ),
                   Padding(
                     padding:
-                        EdgeInsets.only(left: width * 0.26, top: width * 0.008),
+                        EdgeInsets.only(left: width * 0.10, top: width * 0.02),
                     child: Text(
                       subname,
                       style: TextStyle(
                           color: isSelecte[levIndex]["selected"] == true
                               ? Colors.white
-                              : mediumBlackDrum,
+                              : grey,
                           fontSize: 12,
                           fontWeight: FontWeight.w400),
                     ),
@@ -427,7 +225,7 @@ class _LevelState extends State<Level> {
                     : Colors.transparent,
                 spreadRadius: 1,
                 blurRadius: 1,
-                offset: Offset(0, 1), // changes position of shadow
+                offset: Offset(0, 1),
               ),
             ],
             gradient:
@@ -436,8 +234,8 @@ class _LevelState extends State<Level> {
               Radius.circular(12),
             ),
           ),
-          width: 328,
-          height: 140,
+          width: width * 0.91,
+          height: height * 0.17,
         ),
       ),
     );

@@ -23,13 +23,13 @@ class _MyHomePageState extends State<Auth> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(
+                    padding:  EdgeInsets.only(
                         top: 52.0, bottom: 28, left: 16, right: 16),
-                    child: const Text(
+                    child: Text(
                       "Your name",
                       textAlign: TextAlign.left,
                       style:
-                          TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                         title_medium(),
                     ),
                   ),
                   Padding(
@@ -39,28 +39,25 @@ class _MyHomePageState extends State<Auth> {
                         labelText: 'Input',
                         enabledBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(width: 1, color: lightPurpleDrum),
+                              BorderSide(width: 1, color: lightPurple),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 1, color: blackDrum),
+                          borderSide: BorderSide(width: 1, color: black),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 1, color: redDrum),
+                          borderSide: BorderSide(width: 1, color: red),
                         ),
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 4.0, left: 32),
-                    child: const Text(
+                    child:  Text(
                       "Enter your name, which will be shown in the profile and in the statistics.",
                       textAlign: TextAlign.left,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12,
-                          height: 1.5),
+                      style: body_small(),
                     ),
                   ),
                 ],
@@ -85,9 +82,9 @@ class _MyHomePageState extends State<Auth> {
                       width: 328,
                       height: 50,
                       alignment: Alignment.center,
-                      child: const Text(
+                      child: Text(
                         'Continue',
-                        style: const TextStyle(fontSize: 14),
+                        style:  label_large(),
                       ),
                     ),
                   ),
