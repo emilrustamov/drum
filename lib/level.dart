@@ -2,6 +2,7 @@ import 'package:drum/global.dart';
 import 'package:drum/listTrains.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:drum/day.dart';
 
 class Level extends StatefulWidget {
   const Level({super.key});
@@ -44,29 +45,12 @@ class _LevelState extends State<Level> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
-          title: Text(
-            "Choose your level",
-            style: title_medium(),
-          ),
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(
-              Icons.arrow_back,
-              color: black,
-            ),
-          ),
-        ),
+        appBar: appBar(context),
         body: SafeArea(
           child: Align(
             alignment: Alignment.center,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              
               children: [
                 ...List.generate(
                     3,
@@ -78,36 +62,7 @@ class _LevelState extends State<Level> {
                         levelInfo[index]["subname"],
                         levelInfo[index]["disImage"],
                         levelInfo[index]["activImage"])),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: width * 0.04, vertical: 50),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ListTrains()));
-                    },
-                    style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20))),
-                    child: Ink(
-                      decoration: BoxDecoration(
-                          gradient: gradient,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Container(
-                        width: width * 0.91,
-                        height: height * 0.06,
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Continue',
-                          style: label_large(),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                primaryButton(context, ListTrains())
               ],
             ),
           ),
@@ -145,7 +100,8 @@ class _LevelState extends State<Level> {
                   Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: width * 0.1,  right: width * 0.01),
+                        padding: EdgeInsets.only(
+                            left: width * 0.1, right: width * 0.01),
                         child: Container(
                           decoration: BoxDecoration(
                             color: isSelecte[levIndex]["selected"] == true

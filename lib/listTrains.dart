@@ -1,3 +1,4 @@
+import 'package:drum/day.dart';
 import 'package:drum/global.dart';
 import 'package:drum/level.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +11,8 @@ class ListTrains extends StatefulWidget {
 }
 
 class _ListTrainsState extends State<ListTrains> {
-    bool isShow = false;
+  bool isShow = false;
   @override
-
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -21,9 +21,9 @@ class _ListTrainsState extends State<ListTrains> {
         BottomNavigationBarItem(
           icon: Icon(
             Icons.school,
-            color: mediumPurple,
+            color: darkPurple,
           ),
-          label: 'Exercies',
+          label: 'Exercises',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.assignment),
@@ -37,8 +37,9 @@ class _ListTrainsState extends State<ListTrains> {
         )
       ]),
       appBar: AppBar(
+        centerTitle: false,
         elevation: 0,
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: Colors.white,
         actions: [
           GestureDetector(
             onTap: () {
@@ -48,60 +49,70 @@ class _ListTrainsState extends State<ListTrains> {
               });
             },
             child: Padding(
-              padding: EdgeInsets.only(right: width * 0.04),
+              padding: EdgeInsets.only(right: width * 0.06),
               child: Icon(
                 Icons.swap_horiz,
-                color: mediumPurple,
+                color: darkPurple,
               ),
             ),
           )
         ],
-        title: Text(
-          "Beginner: Exercises (0/30)",
-          style: title_medium(),
+        title: Transform(
+          // you can forcefully translate values left side using Transform
+          transform: Matrix4.translationValues(-50.0, 0.0, 0.0),
+          child: Text(
+            "Beginner: Exercises (0/30)",
+            style: title_medium(),
+          ),
         ),
       ),
       body: SafeArea(
         child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           children: [
             ...List.generate(30, (index) {
-              return GestureDetector(onTap: () {
-                setState(() {
-                  isShow = !isShow;
-                });
-              },
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isShow = !isShow;
+                  });
+                },
                 child: Container(
                   margin: EdgeInsets.only(bottom: 12),
-                  padding: EdgeInsets.all(20),
-                  width: width * 0.91,
-                  height: 100,
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  width: width * 0.9,
+                  height: 74,
                   decoration: BoxDecoration(
                       gradient: isShow == true ? gradient : gradient2,
                       borderRadius: BorderRadius.circular(20)),
                   child: Row(
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Day ${index}',
-                            style: label_large(),
-                          ),
-                          Text(
-                            '0/9 exercises',
-                            style: label_medium(),
-                          ),
-                        ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Day ${index + 1}',
+                              style: label_large(black),
+                            ),
+                            Text(
+                              '0/9 exercises',
+                              style: body_small(),
+                            ),
+                          ],
+                        ),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [  
-                          Visibility(
-                            visible: isShow,
-                              child: ElevatedButton(
-                                  onPressed: () {}, child: Text("1")))
-                        ],
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Visibility(
+                                visible: isShow,
+                                child: smallButton(context, Day()))
+                          ],
+                        ),
                       ),
                     ],
                   ),
