@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:drum/day.dart';
 
 class Level extends StatefulWidget {
-  const Level({super.key});
+  const Level();
 
   @override
   State<Level> createState() => _LevelState();

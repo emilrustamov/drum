@@ -4,7 +4,7 @@ import 'package:drum/level.dart';
 import 'package:flutter/material.dart';
 
 class ListTrains extends StatefulWidget {
-  const ListTrains({super.key});
+  const ListTrains();
 
   @override
   State<ListTrains> createState() => _ListTrainsState();
