@@ -45,7 +45,7 @@ class _LevelState extends State<Level> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: appBar(context),
+        appBar: MyAppbar(w: width),
         body: SafeArea(
           child: Align(
             alignment: Alignment.center,
