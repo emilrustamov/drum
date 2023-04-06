@@ -89,7 +89,7 @@ class _DayState extends State<Day> {
                                 margin: EdgeInsets.symmetric(horizontal: 20),
                                 child: Text(
                                   '5 mins',
-                                  style: body_small(),
+                                  style: body_small(grey),
                                 ),
                               ),
                             ],

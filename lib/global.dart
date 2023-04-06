@@ -26,9 +26,9 @@ TextStyle label_medium(Color textcolor) {
   return TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: textcolor);
 }
 
-TextStyle body_small() {
+TextStyle body_small(Color colors) {
   return TextStyle(
-      fontSize: 12, fontWeight: FontWeight.w400, color: grey, height: 1.5);
+      fontSize: 12, fontWeight: FontWeight.w400, color: colors, height: 1.5);
 }
 
 TextStyle body_medium() {

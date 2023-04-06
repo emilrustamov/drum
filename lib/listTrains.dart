@@ -12,6 +12,9 @@ class ListTrains extends StatefulWidget {
 
 class _ListTrainsState extends State<ListTrains> {
   bool isShow = false;
+
+  List lessonList = [];
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -71,10 +74,15 @@ class _ListTrainsState extends State<ListTrains> {
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           children: [
             ...List.generate(30, (index) {
+              lessonList.add(false);
               return GestureDetector(
                 onTap: () {
                   setState(() {
-                    isShow = !isShow;
+                    // isShow = !isShow;
+                    for (var i = 0; i < lessonList.length; i++) {
+                      lessonList[i] = false;
+                    }
+                    lessonList[index] = !lessonList[index];
                   });
                 },
                 child: Container(
@@ -83,7 +91,8 @@ class _ListTrainsState extends State<ListTrains> {
                   width: width * 0.9,
                   height: 74,
                   decoration: BoxDecoration(
-                      gradient: isShow == true ? gradient : gradient2,
+                      gradient:
+                          lessonList[index] == true ? gradient : gradient2,
                       borderRadius: BorderRadius.circular(20)),
                   child: Row(
                     children: [
@@ -94,11 +103,15 @@ class _ListTrainsState extends State<ListTrains> {
                           children: [
                             Text(
                               'Day ${index + 1}',
-                              style: label_large(black),
+                              style: lessonList[index] == true
+                                  ? label_large(white)
+                                  : label_large(black),
                             ),
                             Text(
                               '0/9 exercises',
-                              style: body_small(),
+                              style: lessonList[index] == true
+                                  ? body_small(white)
+                                  : body_small(grey),
                             ),
                           ],
                         ),
@@ -109,7 +122,7 @@ class _ListTrainsState extends State<ListTrains> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Visibility(
-                                visible: isShow,
+                                visible: lessonList[index],
                                 child: smallButton(context, Day()))
                           ],
                         ),

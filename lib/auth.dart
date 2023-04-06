@@ -10,6 +10,8 @@ class Auth extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<Auth> {
+  final username = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -34,6 +36,7 @@ class _MyHomePageState extends State<Auth> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: TextField(
+                      controller: username,
                       decoration: InputDecoration(
                         labelText: 'Input',
                         enabledBorder: OutlineInputBorder(
@@ -55,7 +58,7 @@ class _MyHomePageState extends State<Auth> {
                     child: Text(
                       "Enter your name, which will be shown in the profile and in the statistics.",
                       textAlign: TextAlign.left,
-                      style: body_small(),
+                      style: body_small(grey),
                     ),
                   ),
                 ],
