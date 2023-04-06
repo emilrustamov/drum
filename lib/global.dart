@@ -142,22 +142,33 @@ Row vitaminka(Color? emilColor, bool? selected) {
   );
 }
 
-AppBar appBar(BuildContext context) {
-  return AppBar(
-    elevation: 0,
-    backgroundColor: Color.fromARGB(255, 255, 255, 255),
-    title: Text(
-      "Choose your level",
-      style: title_medium(),
-    ),
-    leading: GestureDetector(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Icon(
-        Icons.arrow_back,
-        color: black,
+// AppBar appBar(BuildContext context) {
+//   return MyAppbar();
+// }
+
+class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
+  const MyAppbar({super.key, required this.w});
+  final double w;
+  @override
+  Size get preferredSize => Size(w, 48);
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      elevation: 0,
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      title: Text(
+        "Choose your level",
+        style: title_medium(),
       ),
-    ),
-  );
+      leading: GestureDetector(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: Icon(
+          Icons.arrow_back,
+          color: black,
+        ),
+      ),
+    );
+  }
 }

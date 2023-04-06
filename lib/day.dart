@@ -19,7 +19,9 @@ class _DayState extends State<Day> {
     double height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
-        appBar: appBar(context),
+        appBar: MyAppbar(
+          w: width,
+        ),
         body: Column(
           children: [
             Container(
