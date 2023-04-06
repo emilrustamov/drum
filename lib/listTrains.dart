@@ -1,6 +1,7 @@
 import 'package:drum/day.dart';
 import 'package:drum/global.dart';
 import 'package:drum/level.dart';
+import 'package:drum/profile.dart';
 import 'package:flutter/material.dart';
 
 class ListTrains extends StatefulWidget {
@@ -20,25 +21,46 @@ class _ListTrainsState extends State<ListTrains> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(items: [
-        BottomNavigationBarItem(
-          icon: Icon(
-            Icons.school,
-            color: darkPurple,
-          ),
-          label: 'Exercises',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.assignment),
-          label: 'Statitics',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(
-            Icons.person,
-          ),
-          label: 'Me',
-        )
-      ]),
+      bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: black,
+          unselectedItemColor: black200,
+          currentIndex: page,
+          onTap: (index) {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => tabs[index]));
+            page = index;
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: Container(
+                decoration: BoxDecoration(
+                    color: superLightPurple,
+                    borderRadius: const BorderRadius.all(Radius.circular(12))),
+                width: width * 0.15,
+                child: Icon(
+                  Icons.school,
+                  color: darkPurple,
+                ),
+              ),
+              label: "Exercises",
+            ),
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.assignment),
+              label: 'Statitics',
+            ),
+            BottomNavigationBarItem(
+              icon: GestureDetector(
+                // onTap: () {
+                //   Navigator.pushReplacement(context,
+                //       MaterialPageRoute(builder: (context) => Profile()));
+                // },
+                child: Icon(
+                  Icons.person,
+                ),
+              ),
+              label: 'Me',
+            )
+          ]),
       appBar: AppBar(
         centerTitle: false,
         elevation: 0,
@@ -64,7 +86,7 @@ class _ListTrainsState extends State<ListTrains> {
           // you can forcefully translate values left side using Transform
           transform: Matrix4.translationValues(-50.0, 0.0, 0.0),
           child: Text(
-            "Beginner: Exercises (0/30)",
+            "${levelInfo[level]['name']}: Exercises (0/30)",
             style: title_medium(),
           ),
         ),
@@ -123,7 +145,11 @@ class _ListTrainsState extends State<ListTrains> {
                           children: [
                             Visibility(
                                 visible: lessonList[index],
-                                child: smallButton(context, Day()))
+                                child: smallButton(
+                                    context,
+                                    Day(
+                                      days: index + 1,
+                                    )))
                           ],
                         ),
                       ),

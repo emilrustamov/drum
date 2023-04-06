@@ -10,7 +10,7 @@ class Auth extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<Auth> {
-  final username = TextEditingController();
+  bool btnStatus = false;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +37,16 @@ class _MyHomePageState extends State<Auth> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: TextField(
                       controller: username,
+                      onChanged: (value) {
+                        setState(() {
+                          value = username.text;
+                          if (username.text.length >= 3) {
+                            btnStatus = true;
+                          } else {
+                            btnStatus = false;
+                          }
+                        });
+                      },
                       decoration: InputDecoration(
                         labelText: 'Input',
                         enabledBorder: OutlineInputBorder(
@@ -54,7 +64,7 @@ class _MyHomePageState extends State<Auth> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 4.0, left: 32),
+                    padding: const EdgeInsets.only(top: 4.0, left: 25),
                     child: Text(
                       "Enter your name, which will be shown in the profile and in the statistics.",
                       textAlign: TextAlign.left,
@@ -63,7 +73,7 @@ class _MyHomePageState extends State<Auth> {
                   ),
                 ],
               ),
-              primaryButton(context, Level()),
+              primaryButton(context, Level(), btnStatus),
             ],
           ),
         ),

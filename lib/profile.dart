@@ -6,7 +6,7 @@ import 'package:drum/listTrains.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({super.key});
+  const Profile();
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -15,9 +15,58 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: black,
+          unselectedItemColor: black200,
+          currentIndex: page,
+          onTap: (index) {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => tabs[index]));
+            page = index;
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: GestureDetector(
+                // onTap: () {
+                //   Navigator.pushReplacement(context,
+                //       MaterialPageRoute(builder: (context) => ListTrains()));
+                // },
+                child: Icon(
+                  Icons.school,
+                ),
+              ),
+              label: "Exercises",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.assignment),
+              label: 'Statitics',
+            ),
+            BottomNavigationBarItem(
+              icon: Container(
+                decoration: BoxDecoration(
+                    color: superLightPurple,
+                    borderRadius: const BorderRadius.all(Radius.circular(12))),
+                width: width * 0.15,
+                child: Icon(
+                  Icons.person,
+                  color: darkPurple,
+                ),
+              ),
+              label: 'Me',
+            )
+          ]),
       appBar: AppBar(
-        title: Text("Vladimir"),
+        title: Text(
+          username.text,
+          style: TextStyle(color: black),
+        ),
+        backgroundColor: lightWhite,
+        elevation: 0,
+        leadingWidth: 0,
       ),
       body: Column(
         children: [
@@ -35,8 +84,7 @@ class _ProfileState extends State<Profile> {
 }
 
 class ProfileWidget extends StatelessWidget {
-  const ProfileWidget({
-    super.key,
+  ProfileWidget({
     required this.text,
     required this.icon,
   });
@@ -44,10 +92,12 @@ class ProfileWidget extends StatelessWidget {
   final IconData icon;
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+      padding: EdgeInsets.symmetric(vertical: height * 0.002, horizontal: 20),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 15),
+        padding: const EdgeInsets.symmetric(vertical: 15),
         decoration:
             BoxDecoration(border: Border(bottom: BorderSide(color: grey))),
         child: Row(

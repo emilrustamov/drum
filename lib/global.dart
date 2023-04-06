@@ -1,3 +1,5 @@
+import 'package:drum/listTrains.dart';
+import 'package:drum/profile.dart';
 import 'package:flutter/material.dart';
 
 import 'level.dart';
@@ -11,8 +13,38 @@ Color mediumPurple = Color(0xffBA46C3);
 Color darkPurple = Color(0xff802188);
 Color grey = Color(0xff768192);
 Color black = Color(0xff373737);
+Color black200 = Color(0xff768192);
 Gradient gradient = LinearGradient(colors: [mediumPurple, darkPurple]);
+Gradient disgradient = LinearGradient(colors: [grey, black]);
 Gradient gradient2 = LinearGradient(colors: [Colors.white, Colors.white]);
+
+// User
+final username = TextEditingController();
+int level = 0;
+
+int page = 0;
+List tabs = [ListTrains(), ListTrains(), Profile()];
+
+List levelInfo = [
+  {
+    "name": "Beginner",
+    "subname": "I'm just starting to learn",
+    "disImage": "images/first_lev_b.svg",
+    "activImage": "images/first_lev_w.svg"
+  },
+  {
+    "name": "Intermediate",
+    "subname": "I train every week to improve my skills",
+    "disImage": "images/second_lev_b.svg",
+    "activImage": "images/first_lev_w.svg"
+  },
+  {
+    "name": "Advanced",
+    "subname": "I play drums well and practice every day",
+    "disImage": "images/third_lev_b.svg",
+    "activImage": "images/first_lev_w.svg"
+  },
+];
 
 TextStyle title_medium() {
   return TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: black);
@@ -36,14 +68,17 @@ TextStyle body_medium() {
       fontSize: 14, fontWeight: FontWeight.w400, color: grey, height: 1.5);
 }
 
-Padding primaryButton(BuildContext context, Widget link) {
+Padding primaryButton(BuildContext context, Widget link, bool status) {
   double width = MediaQuery.of(context).size.width;
   double height = MediaQuery.of(context).size.height;
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
     child: ElevatedButton(
       onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => link));
+        status == true
+            ? Navigator.push(
+                context, MaterialPageRoute(builder: (context) => link))
+            : Container();
       },
       style: ElevatedButton.styleFrom(
           padding: EdgeInsets.zero,
@@ -51,7 +86,8 @@ Padding primaryButton(BuildContext context, Widget link) {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
       child: Ink(
         decoration: BoxDecoration(
-            gradient: gradient, borderRadius: BorderRadius.circular(20)),
+            gradient: status == true ? gradient : disgradient,
+            borderRadius: BorderRadius.circular(20)),
         child: Container(
           width: width * 0.9,
           height: 50,
@@ -147,7 +183,7 @@ Row vitaminka(Color? emilColor, bool? selected) {
 // }
 
 class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const MyAppbar({super.key, required this.w});
+  const MyAppbar({required this.w});
   final double w;
   @override
   Size get preferredSize => Size(w, 48);
