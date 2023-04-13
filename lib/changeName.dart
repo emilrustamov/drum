@@ -1,16 +1,18 @@
 import 'package:drum/global.dart';
 import 'package:drum/level.dart';
+import 'package:drum/profile.dart';
+import 'package:drum/widgets/appbar.dart';
 import 'package:drum/widgets/button.dart';
 import 'package:flutter/material.dart';
 
-class Auth extends StatefulWidget {
-  const Auth();
+class ChangeName extends StatefulWidget {
+  const ChangeName();
 
   @override
-  State<Auth> createState() => _MyHomePageState();
+  State<ChangeName> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<Auth> {
+class _MyHomePageState extends State<ChangeName> {
   bool btnStatus = false;
 
   @override
@@ -18,18 +20,7 @@ class _MyHomePageState extends State<Auth> {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: Transform(
-          transform: Matrix4.translationValues(10.0, 0.0, 0.0),
-          child: Text(
-            "Your name",
-            style: title_medium(black),
-          ),
-        ),
-      ),
+      appBar: myAppbar("Change your name", Icons.arrow_back),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -87,7 +78,7 @@ class _MyHomePageState extends State<Auth> {
               ),
             ],
           ),
-          primaryButton(context, Level(), btnStatus, "Continue"),
+          primaryButton(context, Profile(), btnStatus, "Save"),
         ],
       ),
     );

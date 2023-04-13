@@ -1,7 +1,7 @@
 import 'package:drum/day.dart';
 import 'package:drum/global.dart';
 import 'package:drum/level.dart';
-import 'package:drum/profile.dart';
+import 'package:drum/widgets/smallButton.dart';
 import 'package:flutter/material.dart';
 
 class ListTrains extends StatefulWidget {
@@ -18,8 +18,8 @@ class _ListTrainsState extends State<ListTrains> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: black,
@@ -35,8 +35,9 @@ class _ListTrainsState extends State<ListTrains> {
               icon: Container(
                 decoration: BoxDecoration(
                     color: superLightPurple,
-                    borderRadius: const BorderRadius.all(Radius.circular(12))),
-                width: width * 0.15,
+                    borderRadius: const BorderRadius.all(Radius.circular(20))),
+                width: w * 0.17,
+                height: h*0.05,
                 child: Icon(
                   Icons.school,
                   color: darkPurple,
@@ -54,7 +55,7 @@ class _ListTrainsState extends State<ListTrains> {
                 //   Navigator.pushReplacement(context,
                 //       MaterialPageRoute(builder: (context) => Profile()));
                 // },
-                child: Icon(
+                child: const Icon(
                   Icons.person,
                 ),
               ),
@@ -70,11 +71,11 @@ class _ListTrainsState extends State<ListTrains> {
             onTap: () {
               setState(() {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Level()));
+                    context, MaterialPageRoute(builder: (context) => const Level()));
               });
             },
             child: Padding(
-              padding: EdgeInsets.only(right: width * 0.06),
+              padding: EdgeInsets.only(right: w * 0.06),
               child: Icon(
                 Icons.swap_horiz,
                 color: darkPurple,
@@ -87,13 +88,13 @@ class _ListTrainsState extends State<ListTrains> {
           transform: Matrix4.translationValues(-50.0, 0.0, 0.0),
           child: Text(
             "${levelInfo[level]['name']}: Exercises (0/30)",
-            style: title_medium(),
+            style: title_medium(black),
           ),
         ),
       ),
       body: SafeArea(
         child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: EdgeInsets.symmetric(horizontal: w*0.04, vertical: h*0.017),
           children: [
             ...List.generate(30, (index) {
               lessonList.add(false);
@@ -108,10 +109,10 @@ class _ListTrainsState extends State<ListTrains> {
                   });
                 },
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 12),
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  width: width * 0.9,
-                  height: 74,
+                  margin: EdgeInsets.only(bottom: h*0.017),
+                  padding: EdgeInsets.symmetric(horizontal: w*0.04),
+                  width: w* 0.9,
+                  height: h*0.1,
                   decoration: BoxDecoration(
                       gradient:
                           lessonList[index] == true ? gradient : gradient2,
@@ -126,13 +127,13 @@ class _ListTrainsState extends State<ListTrains> {
                             Text(
                               'Day ${index + 1}',
                               style: lessonList[index] == true
-                                  ? label_large(white)
-                                  : label_large(black),
+                                  ? title_medium(Colors.white)
+                                  : title_medium(black),
                             ),
                             Text(
                               '0/9 exercises',
                               style: lessonList[index] == true
-                                  ? body_small(white)
+                                  ? body_small(Colors.white)
                                   : body_small(grey),
                             ),
                           ],

@@ -1,5 +1,7 @@
 import 'package:drum/global.dart';
 import 'package:drum/level.dart';
+import 'package:drum/listTrains.dart';
+import 'package:drum/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -24,6 +26,7 @@ class _DayState extends State<Day> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    bool selectedLevel = true;
     return Container(
         height: height,
         width: width,
@@ -35,7 +38,11 @@ class _DayState extends State<Day> {
                 children: [
                   body(width, height),
                   appBar(width, height, context, days),
-                  buttons(width, height),
+                  Expanded(
+                      child: Align( alignment: Alignment.bottomCenter,
+                        child: primaryButton(
+                            context, ListTrains(), selectedLevel, "start"),
+                      )),
                 ],
               )),
           // body: Container(),
@@ -97,12 +104,8 @@ Container body(double width, double height) {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Warming arms",
-                                    style:
-                                        TextStyle(color: black, fontSize: 16)),
-                                Text("7 min 30 sec",
-                                    style:
-                                        TextStyle(color: grey, fontSize: 16)),
+                                Text("Warming arms", style: label_large(black)),
+                                Text("7 min 30 sec", style: body_small(grey)),
                               ],
                             ),
                           )
@@ -192,7 +195,7 @@ Widget appBar(double width, double height, BuildContext context, int days) {
                     children: [
                       Text(
                         "9 Exercises",
-                        style: TextStyle(color: grey, fontSize: 16),
+                        style: body_medium(),
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: width * 0.05),

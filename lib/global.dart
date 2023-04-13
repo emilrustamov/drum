@@ -1,8 +1,7 @@
 import 'package:drum/listTrains.dart';
 import 'package:drum/profile.dart';
+import 'package:drum/statistycs.dart';
 import 'package:flutter/material.dart';
-
-import 'level.dart';
 
 Color red = Color(0xffB3261E);
 Color white = Color(0xffE4E6E9);
@@ -23,7 +22,7 @@ final username = TextEditingController();
 int level = 0;
 
 int page = 0;
-List tabs = [ListTrains(), ListTrains(), Profile()];
+List tabs = [ListTrains(), Statystics(), Profile()];
 
 List levelInfo = [
   {
@@ -46,8 +45,12 @@ List levelInfo = [
   },
 ];
 
-TextStyle title_medium() {
-  return TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: black);
+TextStyle title_medium(Color textcolor) {
+  return TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: textcolor);
+}
+
+TextStyle title_small(Color textcolor) {
+  return TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: textcolor);
 }
 
 TextStyle label_large(Color textcolor) {
@@ -58,9 +61,12 @@ TextStyle label_medium(Color textcolor) {
   return TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: textcolor);
 }
 
-TextStyle body_small(Color colors) {
+TextStyle body_lagre(Color textcolor) {
   return TextStyle(
-      fontSize: 12, fontWeight: FontWeight.w400, color: colors, height: 1.5);
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      color: textcolor,
+      height: 1.5);
 }
 
 TextStyle body_medium() {
@@ -68,69 +74,10 @@ TextStyle body_medium() {
       fontSize: 14, fontWeight: FontWeight.w400, color: grey, height: 1.5);
 }
 
-Padding primaryButton(BuildContext context, Widget link, bool status) {
-  double width = MediaQuery.of(context).size.width;
-  double height = MediaQuery.of(context).size.height;
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-    child: ElevatedButton(
-      onPressed: () {
-        status == true
-            ? Navigator.push(
-                context, MaterialPageRoute(builder: (context) => link))
-            : Container();
-      },
-      style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.zero,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
-      child: Ink(
-        decoration: BoxDecoration(
-            gradient: status == true ? gradient : disgradient,
-            borderRadius: BorderRadius.circular(20)),
-        child: Container(
-          width: width * 0.9,
-          height: 50,
-          alignment: Alignment.center,
-          child: Text(
-            "Continue",
-            style: label_large(Colors.white),
-          ),
-        ),
-      ),
-    ),
-  );
+TextStyle body_small(Color colors) {
+  return TextStyle(
+      fontSize: 12, fontWeight: FontWeight.w400, color: colors, height: 1.5);
 }
-
-Padding smallButton(BuildContext context, Widget link) {
-  double width = MediaQuery.of(context).size.width;
-  double height = MediaQuery.of(context).size.height;
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 20),
-    child: ElevatedButton(
-      onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => link));
-      },
-      style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
-          padding: EdgeInsets.zero,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
-      child: Ink(
-        child: Container(
-          width: 70,
-          height: 32,
-          alignment: Alignment.center,
-          child: Text(
-            "Start",
-            style: label_medium(mediumPurple),
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
 // Row vitaminka(Color? emilColor, int length, int levelInd, bool? selected) {
 //   int sum = length - levelInd;
 //   return Row(
@@ -156,55 +103,33 @@ Padding smallButton(BuildContext context, Widget link) {
 //   );
 // }
 
-Row vitaminka(Color? emilColor, bool? selected) {
-  return Row(
-    children: [
-      Padding(
-        padding: const EdgeInsets.only(right: 2),
-        child: Container(
-          padding: EdgeInsets.only(right: 4),
-          decoration: BoxDecoration(
-            // index < sum
-            color: selected == false ? emilColor!.withOpacity(1) : white,
-            borderRadius: BorderRadius.all(
-              Radius.circular(12),
-            ),
-          ),
-          width: 6,
-          height: 16,
-        ),
-      )
-    ],
-  );
-}
-
 // AppBar appBar(BuildContext context) {
 //   return MyAppbar();
 // }
 
-class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const MyAppbar({required this.w});
-  final double w;
-  @override
-  Size get preferredSize => Size(w, 48);
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      elevation: 0,
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
-      title: Text(
-        "Choose your level",
-        style: title_medium(),
-      ),
-      leading: GestureDetector(
-        onTap: () {
-          Navigator.pop(context);
-        },
-        child: Icon(
-          Icons.arrow_back,
-          color: black,
-        ),
-      ),
-    );
-  }
-}
+// class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
+//   const MyAppbar({required this.w});
+//   final double w;
+//   @override
+//   Size get preferredSize => Size(w, 56);
+//   @override
+//   Widget build(BuildContext context) {
+//     return AppBar(
+//       elevation: 0,
+//       backgroundColor: Color.fromARGB(255, 255, 255, 255),
+//       title: Text(
+//         "Choose your level",
+//         style: title_medium(black),
+//       ),
+//       leading: GestureDetector(
+//         onTap: () {
+//           Navigator.pop(context);
+//         },
+//         child: Icon(
+//           Icons.arrow_back,
+//           color: black,
+//         ),
+//       ),
+//     );
+//   }
+// }

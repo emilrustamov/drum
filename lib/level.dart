@@ -1,8 +1,9 @@
 import 'package:drum/global.dart';
 import 'package:drum/listTrains.dart';
+import 'package:drum/widgets/appbar.dart';
+import 'package:drum/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:drum/day.dart';
 
 class Level extends StatefulWidget {
   const Level();
@@ -22,38 +23,33 @@ class _LevelState extends State<Level> {
   ];
 
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: MyAppbar(w: width),
-        body: SafeArea(
-          child: Align(
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ...List.generate(
-                    3,
-                    (index) => lev(
-                        width,
-                        height,
-                        index,
-                        levelInfo[index]["name"],
-                        levelInfo[index]["subname"],
-                        levelInfo[index]["disImage"],
-                        levelInfo[index]["activImage"])),
-                primaryButton(context, ListTrains(), selectedLevel)
-              ],
-            ),
-          ),
-        ),
+    return Scaffold(
+      appBar: myAppbar( "Choose your level", Icons.arrow_back),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+
+          ...List.generate(
+              3,
+              (index) => lev(
+                  w,
+                  h,
+                  index,
+                  levelInfo[index]["name"],
+                  levelInfo[index]["subname"],
+                  levelInfo[index]["disImage"],
+                  levelInfo[index]["activImage"])),
+          Expanded
+          (child: Align(alignment: Alignment.bottomCenter, child: primaryButton(context, ListTrains(), selectedLevel, "Continue")))
+        ],
       ),
     );
   }
 
-  GestureDetector lev(double width, double height, int levIndex, String name,
+  GestureDetector lev(double w, double h, int levIndex, String name,
       String subname, String disImage, String activImage) {
     return GestureDetector(
       onTap: () {
@@ -67,7 +63,7 @@ class _LevelState extends State<Level> {
         });
       },
       child: Padding(
-        padding: EdgeInsets.only(bottom: height * 0.02),
+        padding: EdgeInsets.only(bottom: h * 0.02),
         child: Container(
           decoration: BoxDecoration(
             boxShadow: [
@@ -86,13 +82,12 @@ class _LevelState extends State<Level> {
               Radius.circular(12),
             ),
           ),
-          width: width * 0.91,
-          height: height * 0.17,
+          width: w * 0.91,
+          height: h * 0.17,
           child: Row(
             children: [
               Padding(
-                padding:
-                    EdgeInsets.only(left: width * 0.08, right: width * 0.1),
+                padding: EdgeInsets.only(left: w * 0.08, right: w * 0.1),
                 child: isSelecte[levIndex]["selected"] == true
                     ? SvgPicture.asset(activImage)
                     : SvgPicture.asset(disImage),
@@ -106,7 +101,7 @@ class _LevelState extends State<Level> {
                       ...List.generate(
                         levelInfo.length,
                         (index) => Padding(
-                          padding: EdgeInsets.only(right: width * 0.01),
+                          padding: EdgeInsets.only(right: w * 0.01),
                           child: Container(
                             decoration: BoxDecoration(
                               color: levIndex == 0 && index <= 0 ||
@@ -122,7 +117,7 @@ class _LevelState extends State<Level> {
                                 Radius.circular(12),
                               ),
                             ),
-                            width: width * 0.018,
+                            width: w * 0.018,
                             height: 16,
                           ),
                         ),
@@ -169,7 +164,7 @@ class _LevelState extends State<Level> {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: width * 0.02),
+                    padding: EdgeInsets.only(top: w * 0.02),
                     child: Text(
                       subname,
                       style: TextStyle(

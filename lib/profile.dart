@@ -1,8 +1,6 @@
-import 'package:drum/auth.dart';
+import 'package:drum/changeName.dart';
 import 'package:drum/global.dart';
-import 'package:drum/auth.dart';
-import 'package:drum/level.dart';
-import 'package:drum/listTrains.dart';
+import 'package:drum/privacy.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
@@ -15,8 +13,8 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
@@ -49,15 +47,16 @@ class _ProfileState extends State<Profile> {
               icon: Container(
                 decoration: BoxDecoration(
                     color: superLightPurple,
-                    borderRadius: const BorderRadius.all(Radius.circular(12))),
-                width: width * 0.15,
+                    borderRadius: const BorderRadius.all(Radius.circular(20))),
+                width: w * 0.17,
+                height: h*0.05,
                 child: Icon(
                   Icons.person,
                   color: darkPurple,
                 ),
               ),
-              label: 'Me',
-            )
+              label: "Me",
+            ),
           ]),
       appBar: AppBar(
         title: Text(
@@ -70,13 +69,13 @@ class _ProfileState extends State<Profile> {
       ),
       body: Column(
         children: [
-          ProfileWidget(text: "Change name", icon: Icons.edit_outlined),
-          ProfileWidget(text: "Reminders", icon: Icons.notifications_none),
+          ProfileWidget(text: "Change name", icon: Icons.edit_outlined, link: ChangeName()),
+          ProfileWidget(text: "Reminders", icon: Icons.notifications_none,link: Privacy()),
           ProfileWidget(
-              text: "Privacy Policy", icon: Icons.privacy_tip_outlined),
-          ProfileWidget(text: "Delete all data", icon: Icons.delete_outline),
-          ProfileWidget(text: "Feedback", icon: Icons.sms_failed_outlined),
-          ProfileWidget(text: "Share with Friends", icon: Icons.share_outlined),
+              text: "Privacy policy", icon: Icons.privacy_tip_outlined, link: Privacy()),
+          ProfileWidget(text: "Delete all data", icon: Icons.delete_outline, link: Privacy()),
+          ProfileWidget(text: "Feedback", icon: Icons.sms_failed_outlined, link: Privacy()),
+          ProfileWidget(text: "Share with friends about me", icon: Icons.share_outlined, link: Privacy()),
         ],
       ),
     );
@@ -87,23 +86,28 @@ class ProfileWidget extends StatelessWidget {
   ProfileWidget({
     required this.text,
     required this.icon,
+    required this.link,
   });
   final String text;
   final IconData icon;
+  final Widget link;
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: height * 0.002, horizontal: 20),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 15),
-        decoration:
-            BoxDecoration(border: Border(bottom: BorderSide(color: grey))),
-        child: Row(
-          children: [
-            Container(
-              child: Padding(
+      padding: EdgeInsets.symmetric(vertical: h * 0.002, horizontal: 20),
+      child: GestureDetector(onTap: () {
+        Navigator.push(
+                context, MaterialPageRoute(builder: (context) => link));
+      },
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: h * 0.02),
+          decoration:
+              BoxDecoration(border: Border(bottom: BorderSide(color: grey))),
+          child: Row(
+            children: [
+              Padding(
                 padding: const EdgeInsets.only(right: 15.0),
                 child: Icon(
                   icon,
@@ -111,12 +115,12 @@ class ProfileWidget extends StatelessWidget {
                   size: 18,
                 ),
               ),
-            ),
-            Text(
-              text,
-              style: body_medium(),
-            )
-          ],
+              Text(
+                text,
+                style: body_medium(),
+              )
+            ],
+          ),
         ),
       ),
     );
