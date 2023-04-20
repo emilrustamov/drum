@@ -8,6 +8,6 @@ class Privacy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar:  myAppbar("Privacy policy", Icons.arrow_back), body: Column());
+    return Scaffold(appBar:  myAppbar(context, "Privacy policy", Icons.arrow_back), body: Column());
   }
 }

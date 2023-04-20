@@ -1,5 +1,4 @@
 import 'package:drum/global.dart';
-import 'package:drum/level.dart';
 import 'package:drum/listTrains.dart';
 import 'package:drum/widgets/button.dart';
 import 'package:flutter/material.dart';
@@ -50,47 +49,47 @@ class _DayState extends State<Day> {
   }
 }
 
-Positioned buttons(double width, double height) {
-  return Positioned(
-    top: height * 0.85,
-    left: width * 0.1,
-    width: width * 0.8,
-    height: height * 0.07,
-    child: Container(
-      decoration: BoxDecoration(
-          color: darkPurple, borderRadius: BorderRadius.circular(12)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Start",
-            textAlign: TextAlign.center,
-            style: TextStyle(color: white, fontSize: 20),
-          ),
-        ],
-      ),
-    ),
-  );
-}
+// Positioned buttons(double width, double height) {
+//   return Positioned(
+//     top: height * 0.85,
+//     left: width * 0.1,
+//     width: width * 0.8,
+//     height: height * 0.07,
+//     child: Container(
+//       decoration: BoxDecoration(
+//           color: darkPurple, borderRadius: BorderRadius.circular(12)),
+//       child: Column(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: [
+//           Text(
+//             "Start",
+//             textAlign: TextAlign.center,
+//             style: TextStyle(color: white, fontSize: 20),
+//           ),
+//         ],
+//       ),
+//     ),
+//   );
+// }
 
-Container body(double width, double height) {
+Container body(double w, double h) {
   return Container(
-      width: width,
-      height: height,
+      width: w,
+      height: h,
       color: Colors.white,
       padding: EdgeInsets.only(
-          top: height * 0.18, right: width * 0.05, left: width * 0.05),
+          top: h * 0.18, right: w * 0.05, left: w * 0.05),
       child: Padding(
-        padding: EdgeInsets.only(bottom: height * 0.15),
+        padding: EdgeInsets.only(bottom: h * 0.15),
         child: ListView(physics: BouncingScrollPhysics(), children: [
           ...List.generate(
               9,
               (index) => Padding(
-                    padding: EdgeInsets.symmetric(vertical: height * 0.01),
+                    padding: EdgeInsets.symmetric(vertical: h * 0.01),
                     child: Container(
                       padding: EdgeInsets.symmetric(
-                          vertical: height * 0.02, horizontal: width * 0.05),
-                      width: width,
+                          vertical: h * 0.02, horizontal: w * 0.05),
+                      width: w,
                       decoration: BoxDecoration(
                           color: lightWhite,
                           borderRadius: BorderRadius.all(Radius.circular(12))),
@@ -100,7 +99,7 @@ Container body(double width, double height) {
                               style:
                                   TextStyle(color: darkPurple, fontSize: 20)),
                           Padding(
-                            padding: EdgeInsets.only(left: width * 0.07),
+                            padding: EdgeInsets.only(left: w * 0.07),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

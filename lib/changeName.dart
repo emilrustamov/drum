@@ -20,7 +20,7 @@ class _MyHomePageState extends State<ChangeName> {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: myAppbar("Change your name", Icons.arrow_back),
+      appBar: myAppbar(context, "Change your name", Icons.arrow_back),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

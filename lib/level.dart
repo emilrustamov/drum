@@ -27,7 +27,7 @@ class _LevelState extends State<Level> {
     double h = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: myAppbar( "Choose your level", Icons.arrow_back),
+      appBar: myAppbar( context, "Choose your level", Icons.arrow_back),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
