@@ -38,10 +38,36 @@ class _DayState extends State<Day> {
                   body(width, height),
                   appBar(width, height, context, days),
                   Expanded(
-                      child: Align( alignment: Alignment.bottomCenter,
-                        child: primaryButton(
-                            context, ListTrains(), selectedLevel, "start"),
-                      )),
+                      child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: width * 0.05, vertical: height * 0.028),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          bottomSheet(context, width, height);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                        child: Ink(
+                          decoration: BoxDecoration(
+                              gradient: gradient,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Container(
+                            width: width * 0.91,
+                            height: height * 0.07,
+                            alignment: Alignment.center,
+                            child: Text(
+                              "Continue",
+                              style: label_large(Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )),
                 ],
               )),
           // body: Container(),
@@ -72,13 +98,163 @@ class _DayState extends State<Day> {
 //   );
 // }
 
+Future<dynamic> bottomSheet(BuildContext context, double w, double h) {
+  int lessonNum = 1;
+  return showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      isDismissible: true,
+      context: context,
+      isScrollControlled: true,
+      builder: (builder) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height * 0.62,
+              padding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: MediaQuery.of(context).size.height * 0.037),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40),
+                  )),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: w,
+                    height: h * 0.2,
+                    decoration: BoxDecoration(
+                        color: superLightPurple,
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Center(
+                        child: Icon(
+                      Icons.play_circle_outline,
+                      size: w * 0.1,
+                    )),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: h * 0.02),
+                    child: Text(
+                      "Warming arms",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: h * 0.01),
+                    child: Text(
+                      "Time: 7 min 30 sec",
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ),
+                  ...List.generate(
+                    3,
+                    (index) => Padding(
+                      padding: EdgeInsets.symmetric(vertical: h * 0.01),
+                      child: Text(
+                        "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text",
+                        style: TextStyle(fontSize: 12, color: grey),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: h * 0.01),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                if (lessonNum != 1) {
+                                  setState(() {
+                                    lessonNum--;
+                                  });
+                                }
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(w * 0.005),
+                                decoration: BoxDecoration(
+                                    color: lessonNum == 1
+                                        ? lightPurple
+                                        : darkPurple,
+                                    shape: BoxShape.circle),
+                                child: Center(
+                                  child: RotatedBox(
+                                      quarterTurns: 90,
+                                      child: Icon(Icons.east,
+                                          color: Colors.white)),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsets.symmetric(horizontal: w * 0.05),
+                              child: Text(
+                                "$lessonNum/9",
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                if (lessonNum != 9) {
+                                  setState(() {
+                                    lessonNum++;
+                                  });
+                                }
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(w * 0.005),
+                                decoration: BoxDecoration(
+                                    color: lessonNum == 9
+                                        ? lightPurple
+                                        : darkPurple,
+                                    shape: BoxShape.circle),
+                                child: Center(
+                                  child: Icon(Icons.east, color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            width: w * 0.4,
+                            height: h * 0.05,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: darkPurple),
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Center(
+                              child: Text(
+                                "Close",
+                                style: TextStyle(color: darkPurple),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            );
+          },
+        );
+      });
+}
+
 Container body(double w, double h) {
   return Container(
       width: w,
       height: h,
       color: Colors.white,
-      padding: EdgeInsets.only(
-          top: h * 0.18, right: w * 0.05, left: w * 0.05),
+      padding: EdgeInsets.only(top: h * 0.18, right: w * 0.05, left: w * 0.05),
       child: Padding(
         padding: EdgeInsets.only(bottom: h * 0.15),
         child: ListView(physics: BouncingScrollPhysics(), children: [

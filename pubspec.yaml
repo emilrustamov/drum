@@ -37,6 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_native_splash: ^2.2.18
   flutter_svg: ^1.0.3
+  flutter_share: ^2.0.0
+  modal_bottom_sheet: ^2.0.1
+  datetime_picker_field_platform: ^0.0.1
 
 
 flutter_native_splash:

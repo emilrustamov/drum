@@ -56,12 +56,17 @@ class _StatysticsState extends State<Statystics> {
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.person,
-                color: darkPurple,
               ),
               label: "Me",
             ),
           ]),
-      appBar: AppBar( actions: [Icon(Icons.east, color: darkPurple,)],
+      appBar: AppBar(
+        actions: [
+          Icon(
+            Icons.east,
+            color: darkPurple,
+          )
+        ],
         centerTitle: false,
         elevation: 0,
         backgroundColor: Colors.transparent,
