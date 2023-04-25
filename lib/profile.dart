@@ -49,7 +49,7 @@ class _ProfileState extends State<Profile> {
                     color: superLightPurple,
                     borderRadius: const BorderRadius.all(Radius.circular(20))),
                 width: w * 0.17,
-                height: h*0.05,
+                height: h * 0.05,
                 child: Icon(
                   Icons.person,
                   color: darkPurple,
@@ -69,13 +69,34 @@ class _ProfileState extends State<Profile> {
       ),
       body: Column(
         children: [
-          ProfileWidget(text: "Change name", icon: Icons.edit_outlined, link: ChangeName()),
-          ProfileWidget(text: "Reminders", icon: Icons.notifications_none,link: Privacy()),
           ProfileWidget(
-              text: "Privacy policy", icon: Icons.privacy_tip_outlined, link: Privacy()),
-          ProfileWidget(text: "Delete all data", icon: Icons.delete_outline, link: Privacy()),
-          ProfileWidget(text: "Feedback", icon: Icons.sms_failed_outlined, link: Privacy()),
-          ProfileWidget(text: "Share with friends about me", icon: Icons.share_outlined, link: Privacy()),
+              text: "Change name",
+              icon: Icons.edit_outlined,
+              link: ChangeName()),
+          ProfileWidget(
+              text: "Reminders",
+              icon: Icons.notifications_none,
+              link: Privacy()),
+          ProfileWidget(
+              text: "Privacy policy",
+              icon: Icons.privacy_tip_outlined,
+              link: Privacy()),
+          ProfileWidget(
+              text: "Delete all data",
+              icon: Icons.delete_outline,
+              link: Privacy()),
+          ProfileWidget(
+              text: "Feedback",
+              icon: Icons.sms_failed_outlined,
+              link: Privacy()),
+          GestureDetector(
+              onTap: () {
+                print("Worked");
+              },
+              child: ProfileWidget(
+                  text: "Share with friends about me",
+                  icon: Icons.share_outlined,
+                  link: null)),
         ],
       ),
     );
@@ -86,21 +107,24 @@ class ProfileWidget extends StatelessWidget {
   ProfileWidget({
     required this.text,
     required this.icon,
-    required this.link,
+    this.link,
   });
   final String text;
   final IconData icon;
-  final Widget link;
+  final Widget? link;
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: h * 0.002, horizontal: 20),
-      child: GestureDetector(onTap: () {
-        Navigator.push(
-                context, MaterialPageRoute(builder: (context) => link));
-      },
+      child: GestureDetector(
+        onTap: () {
+          if (link != null) {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => link!));
+          }
+        },
         child: Container(
           padding: EdgeInsets.symmetric(vertical: h * 0.02),
           decoration:
