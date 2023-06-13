@@ -2,6 +2,7 @@ import 'package:drum/auth.dart';
 import 'package:drum/global.dart';
 import 'package:drum/widgets/appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_share/flutter_share.dart';
 
 class Statystics extends StatefulWidget {
   const Statystics({Key? key}) : super(key: key);
@@ -11,6 +12,14 @@ class Statystics extends StatefulWidget {
 }
 
 class _StatysticsState extends State<Statystics> {
+  Future<void> statis() async {
+    await FlutterShare.share(
+        title: 'Share statistics',
+        text: 'Share statistics',
+        linkUrl: 'https://www.google.com/',
+        chooserTitle: 'Share my statistics');
+  }
+
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
@@ -62,10 +71,15 @@ class _StatysticsState extends State<Statystics> {
           ]),
       appBar: AppBar(
         actions: [
-          Icon(
-            Icons.east,
-            color: darkPurple,
-          )
+          // Icon(
+          //   Icons.share,
+          //   color: darkPurple,
+          // )
+          GestureDetector(
+              onTap: () {
+                statis();
+              },
+              child: Image.asset("images/share.png"))
         ],
         centerTitle: false,
         elevation: 0,

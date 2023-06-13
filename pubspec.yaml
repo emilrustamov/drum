@@ -40,7 +40,7 @@ dependencies:
   flutter_share: ^2.0.0
   modal_bottom_sheet: ^2.0.1
   datetime_picker_field_platform: ^0.0.1
-
+  video_player: ^2.6.1
 
 flutter_native_splash:
   background_image: assets/splash.png

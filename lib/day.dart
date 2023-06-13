@@ -3,6 +3,7 @@ import 'package:drum/listTrains.dart';
 import 'package:drum/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:video_player/video_player.dart';
 
 class Day extends StatefulWidget {
   int days;
@@ -13,12 +14,27 @@ class Day extends StatefulWidget {
 }
 
 class _DayState extends State<Day> {
+  late VideoPlayerController _controller;
+
   int days = 0;
 
   @override
   void initState() {
     days = widget.days;
+    _controller = VideoPlayerController.asset('assets/lesson.mp4');
+
+    _controller.addListener(() {
+      setState(() {});
+    });
+    _controller.setLooping(true);
+    _controller.initialize().then((_) => setState(() {}));
+    _controller.play();
     super.initState();
+  }
+
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 
   @override
@@ -37,15 +53,14 @@ class _DayState extends State<Day> {
                 children: [
                   body(width, height),
                   appBar(width, height, context, days),
-                  Expanded(
-                      child: Align(
+                  Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: width * 0.05, vertical: height * 0.028),
                       child: ElevatedButton(
                         onPressed: () {
-                          bottomSheet(context, width, height);
+                          bottomSheet(context, width, height, _controller);
                         },
                         style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.zero,
@@ -67,7 +82,7 @@ class _DayState extends State<Day> {
                         ),
                       ),
                     ),
-                  )),
+                  ),
                 ],
               )),
           // body: Container(),
@@ -98,7 +113,8 @@ class _DayState extends State<Day> {
 //   );
 // }
 
-Future<dynamic> bottomSheet(BuildContext context, double w, double h) {
+Future<dynamic> bottomSheet(BuildContext context, double w, double h,
+    VideoPlayerController _controller) {
   int lessonNum = 1;
   return showModalBottomSheet(
       backgroundColor: Colors.transparent,
@@ -124,17 +140,29 @@ Future<dynamic> bottomSheet(BuildContext context, double w, double h) {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: w,
-                    height: h * 0.2,
-                    decoration: BoxDecoration(
-                        color: superLightPurple,
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Center(
-                        child: Icon(
-                      Icons.play_circle_outline,
-                      size: w * 0.1,
-                    )),
-                  ),
+                      width: w,
+                      height: h * 0.2,
+                      decoration: BoxDecoration(
+                          color: superLightPurple,
+                          borderRadius: BorderRadius.circular(12)),
+                      child: AspectRatio(
+                        aspectRatio: _controller.value.aspectRatio,
+                        child: Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: <Widget>[
+                            VideoPlayer(_controller),
+                            _ControlsOverlay(controller: _controller),
+                            VideoProgressIndicator(_controller,
+                                allowScrubbing: true),
+                          ],
+                        ),
+                      )
+                      // Center(
+                      //     child: Icon(
+                      //   Icons.play_circle_outline,
+                      //   size: w * 0.1,
+                      // )),
+                      ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: h * 0.02),
                     child: Text(
@@ -404,4 +432,120 @@ Widget appBar(double width, double height, BuildContext context, int days) {
       ],
     ),
   );
+}
+
+class _ControlsOverlay extends StatelessWidget {
+  const _ControlsOverlay({required this.controller});
+
+  static const List<Duration> _exampleCaptionOffsets = <Duration>[
+    Duration(seconds: -10),
+    Duration(seconds: -3),
+    Duration(seconds: -1, milliseconds: -500),
+    Duration(milliseconds: -250),
+    Duration.zero,
+    Duration(milliseconds: 250),
+    Duration(seconds: 1, milliseconds: 500),
+    Duration(seconds: 3),
+    Duration(seconds: 10),
+  ];
+  static const List<double> _examplePlaybackRates = <double>[
+    0.25,
+    0.5,
+    1.0,
+    1.5,
+    2.0,
+    3.0,
+    5.0,
+    10.0,
+  ];
+
+  final VideoPlayerController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 50),
+          reverseDuration: const Duration(milliseconds: 200),
+          child: controller.value.isPlaying
+              ? const SizedBox.shrink()
+              : Container(
+                  color: Colors.black26,
+                  child: const Center(
+                    child: Icon(
+                      Icons.play_arrow,
+                      color: Colors.white,
+                      size: 100.0,
+                      semanticLabel: 'Play',
+                    ),
+                  ),
+                ),
+        ),
+        GestureDetector(
+          onTap: () {
+            controller.value.isPlaying ? controller.pause() : controller.play();
+          },
+        ),
+        Align(
+          alignment: Alignment.topLeft,
+          child: PopupMenuButton<Duration>(
+            initialValue: controller.value.captionOffset,
+            tooltip: 'Caption Offset',
+            onSelected: (Duration delay) {
+              controller.setCaptionOffset(delay);
+            },
+            itemBuilder: (BuildContext context) {
+              return <PopupMenuItem<Duration>>[
+                for (final Duration offsetDuration in _exampleCaptionOffsets)
+                  PopupMenuItem<Duration>(
+                    value: offsetDuration,
+                    child: Text('${offsetDuration.inMilliseconds}ms'),
+                  )
+              ];
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                // Using less vertical padding as the text is also longer
+                // horizontally, so it feels like it would need more spacing
+                // horizontally (matching the aspect ratio of the video).
+                vertical: 12,
+                horizontal: 16,
+              ),
+              child: Text('${controller.value.captionOffset.inMilliseconds}ms'),
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.topRight,
+          child: PopupMenuButton<double>(
+            initialValue: controller.value.playbackSpeed,
+            tooltip: 'Playback speed',
+            onSelected: (double speed) {
+              controller.setPlaybackSpeed(speed);
+            },
+            itemBuilder: (BuildContext context) {
+              return <PopupMenuItem<double>>[
+                for (final double speed in _examplePlaybackRates)
+                  PopupMenuItem<double>(
+                    value: speed,
+                    child: Text('${speed}x'),
+                  )
+              ];
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                // Using less vertical padding as the text is also longer
+                // horizontally, so it feels like it would need more spacing
+                // horizontally (matching the aspect ratio of the video).
+                vertical: 12,
+                horizontal: 16,
+              ),
+              child: Text('${controller.value.playbackSpeed}x'),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
