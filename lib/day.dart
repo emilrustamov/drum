@@ -3,7 +3,7 @@ import 'package:drum/listTrains.dart';
 import 'package:drum/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:video_player/video_player.dart';
+import 'package:native_video_player/native_video_player.dart';
 
 class Day extends StatefulWidget {
   int days;
@@ -14,27 +14,14 @@ class Day extends StatefulWidget {
 }
 
 class _DayState extends State<Day> {
-  late VideoPlayerController _controller;
-
   int days = 0;
+
+  NativeVideoPlayerController? _controller;
 
   @override
   void initState() {
-    days = widget.days;
-    _controller = VideoPlayerController.asset('assets/lesson.mp4');
-
-    _controller.addListener(() {
-      setState(() {});
-    });
-    _controller.setLooping(true);
-    _controller.initialize().then((_) => setState(() {}));
-    _controller.play();
     super.initState();
-  }
-
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
+    days = widget.days;
   }
 
   @override
@@ -60,7 +47,7 @@ class _DayState extends State<Day> {
                           horizontal: width * 0.05, vertical: height * 0.028),
                       child: ElevatedButton(
                         onPressed: () {
-                          bottomSheet(context, width, height, _controller);
+                          bottomSheet(context, width, height);
                         },
                         style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.zero,
@@ -88,6 +75,209 @@ class _DayState extends State<Day> {
           // body: Container(),
         ));
   }
+
+  Future<dynamic> bottomSheet(
+    BuildContext context,
+    double w,
+    double h,
+  ) {
+    int lessonNum = 1;
+    return showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        isDismissible: true,
+        context: context,
+        isScrollControlled: true,
+        builder: (builder) {
+          return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.62,
+                padding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: MediaQuery.of(context).size.height * 0.037),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(40),
+                      topRight: Radius.circular(40),
+                    )),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AspectRatio(
+                      aspectRatio: 12 / 6.5,
+                      child: Stack(
+                        children: [
+                          NativeVideoPlayerView(
+                            onViewReady: (controller) async {
+                              _controller = controller;
+                              await _controller?.setVolume(1);
+                              await _loadVideoSource();
+                            },
+                          ),
+                          Material(
+                            type: MaterialType.transparency,
+                            child: InkWell(
+                              onTap: _togglePlayback,
+                              child: Center(
+                                child: FutureBuilder(
+                                  future: _isPlaying,
+                                  initialData: false,
+                                  builder: (
+                                    BuildContext context,
+                                    AsyncSnapshot<bool> snapshot,
+                                  ) {
+                                    final isPlaying = snapshot.data ?? false;
+                                    return Icon(
+                                      isPlaying
+                                          ? Icons.pause
+                                          : Icons.play_arrow,
+                                      size: 64,
+                                      color: Colors.white,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: h * 0.02),
+                      child: Text(
+                        "Warming arms",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: h * 0.01),
+                      child: Text(
+                        "Time: 7 min 30 sec",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                    ...List.generate(
+                      3,
+                      (index) => Padding(
+                        padding: EdgeInsets.symmetric(vertical: h * 0.01),
+                        child: Text(
+                          "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text",
+                          style: TextStyle(fontSize: 12, color: grey),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: h * 0.01),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  if (lessonNum != 1) {
+                                    setState(() {
+                                      lessonNum--;
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(w * 0.005),
+                                  decoration: BoxDecoration(
+                                      color: lessonNum == 1
+                                          ? lightPurple
+                                          : darkPurple,
+                                      shape: BoxShape.circle),
+                                  child: Center(
+                                    child: RotatedBox(
+                                        quarterTurns: 90,
+                                        child: Icon(Icons.east,
+                                            color: Colors.white)),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: w * 0.05),
+                                child: Text(
+                                  "$lessonNum/9",
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  if (lessonNum != 9) {
+                                    setState(() {
+                                      lessonNum++;
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(w * 0.005),
+                                  decoration: BoxDecoration(
+                                      color: lessonNum == 9
+                                          ? lightPurple
+                                          : darkPurple,
+                                      shape: BoxShape.circle),
+                                  child: Center(
+                                    child:
+                                        Icon(Icons.east, color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              width: w * 0.4,
+                              height: h * 0.05,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: darkPurple),
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: Center(
+                                child: Text(
+                                  "Close",
+                                  style: TextStyle(color: darkPurple),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
+          );
+        });
+  }
+
+  Future<void> _loadVideoSource() async {
+    final videoSource = await VideoSource.init(
+      type: VideoSourceType.asset,
+      path: "images/lesson.mp4",
+    );
+    await _controller?.loadVideoSource(videoSource);
+  }
+
+  Future<void> _togglePlayback() async {
+    final isPlaying = await _isPlaying;
+    if (isPlaying) {
+      await _controller?.pause();
+    } else {
+      await _controller?.play();
+    }
+    setState(() {});
+  }
+
+  Future<bool> get _isPlaying async => await _controller?.isPlaying() ?? false;
 }
 
 // Positioned buttons(double width, double height) {
@@ -112,170 +302,6 @@ class _DayState extends State<Day> {
 //     ),
 //   );
 // }
-
-Future<dynamic> bottomSheet(BuildContext context, double w, double h,
-    VideoPlayerController _controller) {
-  int lessonNum = 1;
-  return showModalBottomSheet(
-      backgroundColor: Colors.transparent,
-      isDismissible: true,
-      context: context,
-      isScrollControlled: true,
-      builder: (builder) {
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            return Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.62,
-              padding: EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: MediaQuery.of(context).size.height * 0.037),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
-                  )),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                      width: w,
-                      height: h * 0.2,
-                      decoration: BoxDecoration(
-                          color: superLightPurple,
-                          borderRadius: BorderRadius.circular(12)),
-                      child: AspectRatio(
-                        aspectRatio: _controller.value.aspectRatio,
-                        child: Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: <Widget>[
-                            VideoPlayer(_controller),
-                            _ControlsOverlay(controller: _controller),
-                            VideoProgressIndicator(_controller,
-                                allowScrubbing: true),
-                          ],
-                        ),
-                      )
-                      // Center(
-                      //     child: Icon(
-                      //   Icons.play_circle_outline,
-                      //   size: w * 0.1,
-                      // )),
-                      ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: h * 0.02),
-                    child: Text(
-                      "Warming arms",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: h * 0.01),
-                    child: Text(
-                      "Time: 7 min 30 sec",
-                      style: TextStyle(fontSize: 12),
-                    ),
-                  ),
-                  ...List.generate(
-                    3,
-                    (index) => Padding(
-                      padding: EdgeInsets.symmetric(vertical: h * 0.01),
-                      child: Text(
-                        "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text",
-                        style: TextStyle(fontSize: 12, color: grey),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: h * 0.01),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                if (lessonNum != 1) {
-                                  setState(() {
-                                    lessonNum--;
-                                  });
-                                }
-                              },
-                              child: Container(
-                                padding: EdgeInsets.all(w * 0.005),
-                                decoration: BoxDecoration(
-                                    color: lessonNum == 1
-                                        ? lightPurple
-                                        : darkPurple,
-                                    shape: BoxShape.circle),
-                                child: Center(
-                                  child: RotatedBox(
-                                      quarterTurns: 90,
-                                      child: Icon(Icons.east,
-                                          color: Colors.white)),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsets.symmetric(horizontal: w * 0.05),
-                              child: Text(
-                                "$lessonNum/9",
-                                style: TextStyle(fontSize: 12),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                if (lessonNum != 9) {
-                                  setState(() {
-                                    lessonNum++;
-                                  });
-                                }
-                              },
-                              child: Container(
-                                padding: EdgeInsets.all(w * 0.005),
-                                decoration: BoxDecoration(
-                                    color: lessonNum == 9
-                                        ? lightPurple
-                                        : darkPurple,
-                                    shape: BoxShape.circle),
-                                child: Center(
-                                  child: Icon(Icons.east, color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            width: w * 0.4,
-                            height: h * 0.05,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: darkPurple),
-                                borderRadius: BorderRadius.circular(12)),
-                            child: Center(
-                              child: Text(
-                                "Close",
-                                style: TextStyle(color: darkPurple),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            );
-          },
-        );
-      });
-}
 
 Container body(double w, double h) {
   return Container(
@@ -432,120 +458,4 @@ Widget appBar(double width, double height, BuildContext context, int days) {
       ],
     ),
   );
-}
-
-class _ControlsOverlay extends StatelessWidget {
-  const _ControlsOverlay({required this.controller});
-
-  static const List<Duration> _exampleCaptionOffsets = <Duration>[
-    Duration(seconds: -10),
-    Duration(seconds: -3),
-    Duration(seconds: -1, milliseconds: -500),
-    Duration(milliseconds: -250),
-    Duration.zero,
-    Duration(milliseconds: 250),
-    Duration(seconds: 1, milliseconds: 500),
-    Duration(seconds: 3),
-    Duration(seconds: 10),
-  ];
-  static const List<double> _examplePlaybackRates = <double>[
-    0.25,
-    0.5,
-    1.0,
-    1.5,
-    2.0,
-    3.0,
-    5.0,
-    10.0,
-  ];
-
-  final VideoPlayerController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        AnimatedSwitcher(
-          duration: const Duration(milliseconds: 50),
-          reverseDuration: const Duration(milliseconds: 200),
-          child: controller.value.isPlaying
-              ? const SizedBox.shrink()
-              : Container(
-                  color: Colors.black26,
-                  child: const Center(
-                    child: Icon(
-                      Icons.play_arrow,
-                      color: Colors.white,
-                      size: 100.0,
-                      semanticLabel: 'Play',
-                    ),
-                  ),
-                ),
-        ),
-        GestureDetector(
-          onTap: () {
-            controller.value.isPlaying ? controller.pause() : controller.play();
-          },
-        ),
-        Align(
-          alignment: Alignment.topLeft,
-          child: PopupMenuButton<Duration>(
-            initialValue: controller.value.captionOffset,
-            tooltip: 'Caption Offset',
-            onSelected: (Duration delay) {
-              controller.setCaptionOffset(delay);
-            },
-            itemBuilder: (BuildContext context) {
-              return <PopupMenuItem<Duration>>[
-                for (final Duration offsetDuration in _exampleCaptionOffsets)
-                  PopupMenuItem<Duration>(
-                    value: offsetDuration,
-                    child: Text('${offsetDuration.inMilliseconds}ms'),
-                  )
-              ];
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                // Using less vertical padding as the text is also longer
-                // horizontally, so it feels like it would need more spacing
-                // horizontally (matching the aspect ratio of the video).
-                vertical: 12,
-                horizontal: 16,
-              ),
-              child: Text('${controller.value.captionOffset.inMilliseconds}ms'),
-            ),
-          ),
-        ),
-        Align(
-          alignment: Alignment.topRight,
-          child: PopupMenuButton<double>(
-            initialValue: controller.value.playbackSpeed,
-            tooltip: 'Playback speed',
-            onSelected: (double speed) {
-              controller.setPlaybackSpeed(speed);
-            },
-            itemBuilder: (BuildContext context) {
-              return <PopupMenuItem<double>>[
-                for (final double speed in _examplePlaybackRates)
-                  PopupMenuItem<double>(
-                    value: speed,
-                    child: Text('${speed}x'),
-                  )
-              ];
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                // Using less vertical padding as the text is also longer
-                // horizontally, so it feels like it would need more spacing
-                // horizontally (matching the aspect ratio of the video).
-                vertical: 12,
-                horizontal: 16,
-              ),
-              child: Text('${controller.value.playbackSpeed}x'),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 }
